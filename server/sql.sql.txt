@@ -1,0 +1,11 @@
+CREATE DATABASE lista_tarefa
+
+
+CREATE TABLE public.usuario
+(
+  id serial NOT NULL,
+  nome character varying(100) NOT NULL,
+  email character varying(150) NOT NULL,
+  senha character varying(100) NOT NULL,
+  token character varying(200) NOT NULL
+)
