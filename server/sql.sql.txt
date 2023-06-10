@@ -9,3 +9,16 @@ CREATE TABLE public.usuario
   senha character varying(100) NOT NULL,
   token character varying(200) NOT NULL
 )
+
+
+create table tarefa(
+int serial not null,
+descricao varchar(100) not null,
+foto varchar(250),
+github varchar(150),
+data date,
+observacao varchar(255),
+finalizado char 
+)
+
+
