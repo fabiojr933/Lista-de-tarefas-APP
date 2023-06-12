@@ -32,7 +32,7 @@ class usuarioController {
 
             res.status(201).json({ dados: usuario });
         } catch (error) {
-            res.status(400).json({ error: error })
+            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
         }
     }
     async login(req, res) {
@@ -62,7 +62,7 @@ class usuarioController {
             });
             return res.status(200).json({ sucesso: dados });
         } catch (error) {
-            return res.status(200).json({ error: error });
+            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
         }
     }
 }

@@ -9,14 +9,15 @@ CREATE TABLE public.usuario
 )
 
 
-create table tarefa(
-int serial not null,
-descricao varchar(100) not null,
-foto varchar(250),
-github varchar(150),
-data date,
-observacao varchar(255),
-finalizado char 
+CREATE TABLE public.tarefa
+(
+  id integer NOT NULL DEFAULT nextval('tarefa_id_seq'::regclass),
+  descricao character varying(100) NOT NULL,
+  foto character varying(250),
+  github character varying(150),
+  data date,
+  observacao character varying(255),
+  finalizado character(1),
+  id_usuario integer,
+  data_finalizado date
 )
-
-
