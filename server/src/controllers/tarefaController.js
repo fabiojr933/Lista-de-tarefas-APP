@@ -5,12 +5,13 @@ const moment = require('moment');
 class tarefaController {
     async aplicativoAdd(req, res) {
         try {
+            var date = moment().format(); 
             let tarefa = {
                 'descricao': req.body.descricao.trim(),
                 'foto': req.body.foto,
                 'github': req.body.github,
                 'finalizado': 'N',
-                'data': moment.now('L'),
+                'data': date,
                 'observacao': req.body.observacao,
             }
             console.log(tarefa)
