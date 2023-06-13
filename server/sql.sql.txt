@@ -5,13 +5,13 @@ CREATE TABLE public.usuario
   nome character varying(100) NOT NULL,
   email character varying(150) NOT NULL,
   senha character varying(100) NOT NULL,
-  token character varying(200) NOT NULL
+  token character varying(200) NOT NULL,
+  PRIMARY KEY (id)
 )
 
-
-CREATE TABLE public.tarefa
+CREATE TABLE public.aplicativo
 (
-  id integer NOT NULL DEFAULT nextval('tarefa_id_seq'::regclass),
+  id serial,
   descricao character varying(100) NOT NULL,
   foto character varying(250),
   github character varying(150),
@@ -19,5 +19,25 @@ CREATE TABLE public.tarefa
   observacao character varying(255),
   finalizado character(1),
   id_usuario integer,
-  data_finalizado date
+  data_finalizado date,
+  PRIMARY KEY (id),
+CONSTRAINT FK_id_usuario FOREIGN KEY (id_usuario)
+    REFERENCES usuario(id)
+)
+
+
+CREATE TABLE public.tarefa
+(
+  id serial,
+  descricao character varying(100) NOT NULL, 
+  data date, 
+  id_aplicativo integer,
+  id_usuario integer,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+CONSTRAINT FK_id_usuario FOREIGN KEY (id_usuario)
+    REFERENCES usuario(id),
+
+    CONSTRAINT FK_id_aplicativo FOREIGN KEY (id_aplicativo)
+    REFERENCES aplicativo(id)
 )

@@ -4,34 +4,51 @@ import Button from "../../components/Button";
 import * as C from "./styles";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import axios from 'axios';
+import api from '../../services/ip';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
-  const [emailConf, setEmailConf] = useState("");
+  const [nome, setNome] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const { signup } = useAuth();
 
-  const handleSignup = () => {
-    if (!email | !emailConf | !senha) {
+  const handleSignup = async () => {
+    if (!email | !nome | !senha) {
       setError("Preencha todos os campos");
       return;
-    } else if (email !== emailConf) {
-      setError("Os e-mails não são iguais");
-      return;
+    }
+    var data = {
+      'email': email,
+      'senha': senha,
+      'nome': nome
     }
 
-    const res = signup(email, senha);
+    var config = {
+      method: 'POST',
+      url: api.url_base_api + '/usuario',
+      data: data
+    };
+    try {
+      const response = await axios(config);
+      if (response.status == 201) {
+        const res = signup(email, senha);
+        if (res) {
+          setError(res);
+          return
+        }
+        navigate("/");
+      } else {
+        setError(response.data.error.error);
+        return
+      }
 
-    if (res) {
-      setError(res);
-      return;
+    } catch (error) {
+      setError(error.response.data.error.error);
     }
-
-    alert("Usuário cadatrado com sucesso!");
-    navigate("/");
   };
 
   return (
@@ -45,10 +62,10 @@ const Signup = () => {
           onChange={(e) => [setEmail(e.target.value), setError("")]}
         />
         <Input
-          type="email"
-          placeholder="Confirme seu E-mail"
-          value={emailConf}
-          onChange={(e) => [setEmailConf(e.target.value), setError("")]}
+          type="nome"
+          placeholder="Digite seu nome"
+          value={nome}
+          onChange={(e) => [setNome(e.target.value), setError("")]}
         />
         <Input
           type="password"

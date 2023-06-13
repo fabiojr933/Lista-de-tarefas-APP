@@ -32,7 +32,8 @@ class usuarioController {
 
             res.status(201).json({ dados: usuario });
         } catch (error) {
-            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
+            console.log(error)
+            res.status(400).json({ error: error });
         }
     }
     async login(req, res) {
