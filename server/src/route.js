@@ -13,9 +13,11 @@ route.post('/usuario', usuario.usuarioAdd);
 route.post('/usuario/login', usuario.login);
 
 route.post('/aplicativo', Middleware.Autorizacao, aplicativo.aplicativoAdd);
-route.get('/aplicativo', Middleware.Autorizacao, aplicativo.aplicativoAll);
+route.get('/aplicativoPendente', Middleware.Autorizacao, aplicativo.aplicativoAllPendente);
+route.get('/aplicativoFinalizado', Middleware.Autorizacao, aplicativo.aplicativoAllFinalizado);
 route.get('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoAllId);
 route.put('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoFinalizado);
+route.delete('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoExcluir);
 
 route.get('/tarefa', Middleware.Autorizacao, tarefa.tarefaAll);
 route.post('/tarefa', Middleware.Autorizacao, tarefa.tarefaAdd);

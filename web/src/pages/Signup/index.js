@@ -3,7 +3,6 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import axios from 'axios';
 import api from '../../services/ip';
 
@@ -14,7 +13,7 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+
 
   const handleSignup = async () => {
     if (!email | !nome | !senha) {
@@ -34,18 +33,12 @@ const Signup = () => {
     };
     try {
       const response = await axios(config);
-      if (response.status == 201) {
-        const res = signup(email, senha);
-        if (res) {
-          setError(res);
-          return
-        }
+      if (response.status == 201) { 
         navigate("/");
       } else {
         setError(response.data.error.error);
         return
       }
-
     } catch (error) {
       setError(error.response.data.error.error);
     }

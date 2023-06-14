@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { produce } from 'immer'
 import { loadLists } from '../../services/api'
 import BoardContext from './context'
@@ -7,10 +7,12 @@ import { Container } from './styles';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useParams } from "react-router-dom";
 
 const data = loadLists()
-export default function Board() {
-
+export default function Board(props) {
+  const { id_aplicativo } = useParams();
+  
   const [lists, setLists] = useState(data);
   const [isMovingCard, setIsMovingCard] = useState(false)
 
@@ -21,6 +23,13 @@ export default function Board() {
   const [showFinalizado, setShowFinalizado] = useState(false);
   const handleCloseFinalizado = () => setShowFinalizado(false);
   const handleShowFinalizado = () => setShowFinalizado(true);
+
+
+  const [idAplicativo, setIdAplicativo] = useState(null);
+
+  useEffect(() => {
+    setIdAplicativo(id_aplicativo);
+  }, []);
 
   console.log(lists)
   const handleDrop = useCallback(

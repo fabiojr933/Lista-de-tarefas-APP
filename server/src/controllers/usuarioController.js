@@ -63,7 +63,7 @@ class usuarioController {
             });
             return res.status(200).json({ sucesso: dados });
         } catch (error) {
-            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
+            res.status(400).json({ error: error });
         }
     }
 }

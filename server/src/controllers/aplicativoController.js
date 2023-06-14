@@ -19,14 +19,24 @@ class aplicativoController {
             await knex('aplicativo').insert(tarefa);
             res.status(201).json(tarefa)
         } catch (error) {
+            console.log(error)
             res.status(400).json({ error: 'Ops! ocorreu algum erro' });
         }
     }
 
-    async aplicativoAll(req, res) {
+    async aplicativoAllPendente(req, res) {
         try {
             var id_usuario = req.id_usuario;
-            let data = await knex('aplicativo').where({ id_usuario: id_usuario }).select('*');
+            let data = await knex('aplicativo').where({ finalizado: 'N', id_usuario: id_usuario }).select('*');          
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
+        }
+    }
+    async aplicativoAllFinalizado(req, res) {
+        try {
+            var id_usuario = req.id_usuario;
+            let data = await knex('aplicativo').where({ finalizado: 'S', id_usuario: id_usuario }).select('*');         
             res.status(200).json(data);
         } catch (error) {
             res.status(400).json({ error: 'Ops! ocorreu algum erro' });
@@ -59,6 +69,18 @@ class aplicativoController {
         } catch (error) {
             res.status(400).json({ error: 'Ops! ocorreu algum erro' });
         }
-    }   
+    } 
+    async aplicativoExcluir(req, res) {
+        try {
+            var id_usuario = req.id_usuario;
+            var id = req.params.id;
+
+            if (!id) throw new Validacao('Id é obrigatorio');
+            await knex('aplicativo').where({ id: id, id_usuario: id_usuario }).del();
+            res.status(200).json({ ok: 'sucesso' })
+        } catch (error) {
+            res.status(400).json({ error: 'Ops! ocorreu algum erro' });
+        }
+    } 
 }
 module.exports = aplicativoController;

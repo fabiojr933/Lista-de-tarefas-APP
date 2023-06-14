@@ -9,6 +9,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "immer": "^7.0.5",
+    "moment": "^2.29.4",
     "react": "^18.0.0",
     "react-bootstrap": "^2.7.4",
     "react-dnd": "^11.1.3",

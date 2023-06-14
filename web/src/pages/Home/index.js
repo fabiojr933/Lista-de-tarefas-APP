@@ -8,9 +8,7 @@ import Header from '../../components/Header';
 
 
 const Home = () => {
-  const { signout } = useAuth();
-  const navigate = useNavigate();
-
+ 
   return (
     <DndProvider backend={HTML5Backend}>
       <Header />

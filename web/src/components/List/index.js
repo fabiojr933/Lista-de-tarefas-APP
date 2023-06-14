@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DropTarget } from 'react-dnd';
 import { MdAdd } from 'react-icons/md';
 import Card from '../Card';
 import { Container } from './styles';
-
+import { useParams } from "react-router-dom";
 
 function List({ data, index: listIndex, connectDropTarget }) {
+
+  const { id_aplicativo } = useParams();
+  const [idAplicativo, setIdAplicativo] = useState(null);
 
   async function utualizaTarefa(index, card_id, listIndex, card) {
     console.log(index)
@@ -13,6 +16,10 @@ function List({ data, index: listIndex, connectDropTarget }) {
     console.log(listIndex) // é o principal
     console.log(card)
   }
+
+  useEffect(() => {
+    setIdAplicativo(id_aplicativo);
+  }, []);
 
   return connectDropTarget(
     <div style={{ flexGrow: 0, flexShrink: 0, flexBasis: 320}}>  
