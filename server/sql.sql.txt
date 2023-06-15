@@ -28,16 +28,24 @@ CONSTRAINT FK_id_usuario FOREIGN KEY (id_usuario)
 
 CREATE TABLE public.tarefa
 (
-  id serial,
-  descricao character varying(100) NOT NULL, 
-  data date, 
+  id integer NOT NULL DEFAULT nextval('tarefa_id_seq'::regclass),
+  descricao character varying(100) NOT NULL,
+  data date,
   id_aplicativo integer,
   id_usuario integer,
-  PRIMARY KEY (id),
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id),
-CONSTRAINT FK_id_usuario FOREIGN KEY (id_usuario)
-    REFERENCES usuario(id),
-
-    CONSTRAINT FK_id_aplicativo FOREIGN KEY (id_aplicativo)
-    REFERENCES aplicativo(id)
+  backlog character(1),
+  andamento character(1),
+  revisao_aprovacao character(1),
+  deploy character(1),
+  arquivado character(1),
+  CONSTRAINT tarefa_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_id_aplicativo FOREIGN KEY (id_aplicativo)
+      REFERENCES public.aplicativo (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_id_usuario FOREIGN KEY (id_usuario)
+      REFERENCES public.usuario (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT tarefa_id_usuario_fkey FOREIGN KEY (id_usuario)
+      REFERENCES public.usuario (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )

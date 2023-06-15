@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { produce } from 'immer'
-import { loadLists } from '../../services/api'
 import BoardContext from './context'
 import List from '../List'
 import { Container } from './styles';
@@ -8,12 +7,17 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useParams } from "react-router-dom";
+import axios from 'axios';
+import api from '../../services/ip';
+import { useNavigate } from "react-router-dom";
 
-const data = loadLists()
+
 export default function Board(props) {
+
+  const navigate = useNavigate();
   const { id_aplicativo } = useParams();
-  
-  const [lists, setLists] = useState(data);
+
+  const [lists, setLists] = useState([]);
   const [isMovingCard, setIsMovingCard] = useState(false)
 
   const [show, setShow] = useState(false);
@@ -23,15 +27,68 @@ export default function Board(props) {
   const [showFinalizado, setShowFinalizado] = useState(false);
   const handleCloseFinalizado = () => setShowFinalizado(false);
   const handleShowFinalizado = () => setShowFinalizado(true);
+  const [tarefa, setTarefa] = useState('');
 
 
   const [idAplicativo, setIdAplicativo] = useState(null);
 
   useEffect(() => {
     setIdAplicativo(id_aplicativo);
+    carregarTarefas();
   }, []);
 
-  console.log(lists)
+  //console.log(lists)
+
+
+  async function carregarTarefas() {
+    const tokenAut = localStorage.getItem('token_tarefa');
+    var config = {
+      method: 'GET',
+      url: api.url_base_api + '/tarefa',
+      headers: {
+        Authorization: "Bearer " + JSON.parse(tokenAut).token
+      }
+    };
+    try {
+      const response = await axios(config);
+      if (response.status == 200) {
+        setLists(response.data)
+      }
+    } catch (error) {
+      alert('Ops! ocorreu algum erro');
+    }
+  }
+
+  async function salvarTarefa() {
+    if (!tarefa) {
+      alert('Descrição da tarefa é obrigatorio');
+      return;
+    }
+    if (!idAplicativo || idAplicativo == '' || idAplicativo == undefined) {
+      alert('ID aplicativo é obrigatorio');
+      return;
+    }
+    const tokenAut = localStorage.getItem('token_tarefa');
+    var dados = { 'descricao': tarefa, 'id_aplicativo': idAplicativo }
+    var config = {
+      method: 'POST',
+      url: api.url_base_api + '/tarefa',
+      data: dados,
+      headers: {
+        Authorization: "Bearer " + JSON.parse(tokenAut).token
+      }
+    };
+    try {
+      const response = await axios(config);
+      if (response.status == 201) {
+        setShow(false);
+        carregarTarefas();
+      }
+    } catch (error) {
+      alert('Ops! ocorreu algum erro');
+    }
+  }
+
   const handleDrop = useCallback(
     (index, item) => {
       if (!isMovingCard) {
@@ -83,15 +140,15 @@ export default function Board(props) {
             <Form.Control
               type="text"
               placeholder="Digite o nome da tarefa"
-              readOnly
+              onChange={(e) => [setTarefa(e.target.value)]}
             />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Sair
             </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Finalizar
+            <Button variant="primary" onClick={() => { salvarTarefa() }}>
+              Salvar
             </Button>
           </Modal.Footer>
         </Modal>

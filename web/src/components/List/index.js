@@ -10,7 +10,7 @@ function List({ data, index: listIndex, connectDropTarget }) {
   const { id_aplicativo } = useParams();
   const [idAplicativo, setIdAplicativo] = useState(null);
 
-  async function utualizaTarefa(index, card_id, listIndex, card) {
+  async function atualizaTarefa(index, card_id, listIndex, card) {
     console.log(index)
     console.log(card_id)
     console.log(listIndex) // é o principal
@@ -44,7 +44,7 @@ function List({ data, index: listIndex, connectDropTarget }) {
                   listIndex={listIndex}
                   key={card.id}
                   data={card}>
-                  {utualizaTarefa(index, card.id, listIndex, card)}
+                  {atualizaTarefa(index, card.id, listIndex, card)}
                 </Card>
 
             )
