@@ -28,6 +28,8 @@ export default function Board(props) {
   const handleCloseFinalizado = () => setShowFinalizado(false);
   const handleShowFinalizado = () => setShowFinalizado(true);
   const [tarefa, setTarefa] = useState('');
+  const [github, setGithub] = useState('');
+  const [observacao, setObservacao] = useState('');
 
 
   const [idAplicativo, setIdAplicativo] = useState(null);
@@ -37,14 +39,40 @@ export default function Board(props) {
     carregarTarefas();
   }, []);
 
-  //console.log(lists)
+  async function finalizarTarefa() {
+    var op = window.confirm("Tem certeza que deseja finalizar esse Aplicativo");
+    if (op) {
+      const tokenAut = localStorage.getItem('token_tarefa');
+      var data = {
+        'observacao': observacao,
+        'github': github
+      }
+      var config = {
+        method: 'PUT',
+        url: api.url_base_api + `/aplicativo/${Number(id_aplicativo)}`,
+        data: data,
+        headers: {
+          Authorization: "Bearer " + JSON.parse(tokenAut).token
+        }
+      };
+      try {
+        const response = await axios(config);
+        if (response.status == 200) {
+          navigate('/Tarefa');
+        }
+      } catch (error) {
+        alert('Ops! ocorreu algum erro');
+      }
+    }
+  }
 
 
   async function carregarTarefas() {
+    console.log(id_aplicativo)
     const tokenAut = localStorage.getItem('token_tarefa');
     var config = {
       method: 'GET',
-      url: api.url_base_api + '/tarefa',
+      url: api.url_base_api + `/tarefa/${Number(id_aplicativo)}`,
       headers: {
         Authorization: "Bearer " + JSON.parse(tokenAut).token
       }
@@ -163,23 +191,19 @@ export default function Board(props) {
             <Form.Control
               type="text"
               placeholder="Observação"
-              readOnly
+              onChange={(e) => [setObservacao(e.target.value)]}
             /><br />
             <Form.Control
               type="text"
               placeholder="GitHub"
-              readOnly
+              onChange={(e) => [setGithub(e.target.value)]}
             /><br />
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Selecione as imagem do projeto</Form.Label>
-              <Form.Control type="file" />
-            </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleCloseFinalizado}>
               Sair
             </Button>
-            <Button variant="primary" onClick={handleCloseFinalizado}>
+            <Button variant="primary" onClick={finalizarTarefa}>
               Finalizar
             </Button>
           </Modal.Footer>

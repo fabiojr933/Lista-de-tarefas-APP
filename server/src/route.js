@@ -19,8 +19,9 @@ route.get('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoAllId)
 route.put('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoFinalizado);
 route.delete('/aplicativo/:id', Middleware.Autorizacao, aplicativo.aplicativoExcluir);
 
-route.get('/tarefa', Middleware.Autorizacao, tarefa.tarefaAll);
+route.get('/tarefa/:id_aplicativo', Middleware.Autorizacao, tarefa.tarefaAll);
 route.post('/tarefa', Middleware.Autorizacao, tarefa.tarefaAdd);
 route.delete('/tarefa/:id', Middleware.Autorizacao, tarefa.tarefaExcluir);
+route.put('/tarefa/:id', Middleware.Autorizacao, tarefa.tarefaUpdate);
 
 module.exports = route;

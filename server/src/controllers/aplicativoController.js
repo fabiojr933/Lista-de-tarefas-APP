@@ -44,7 +44,7 @@ class aplicativoController {
     }
     async aplicativoAllId(req, res) {
         try {
-            var id_usuario = Number(req.id_usuario);
+            var id_usuario = Number(req.id_usuario);           
             var id = Number(req.params.id);
             let data = await knex('aplicativo').where({ id: id, id_usuario: id_usuario }).select('*');
             res.status(200).json(data);
