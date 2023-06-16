@@ -33,7 +33,7 @@ npm start
 #### Imagens do projeto
 
 
-<img src=https://github.com/fabiojr933/Lista-de-tarefas-APP/assets/41793614/f6b74d30-ba41-42b2-b1bd-8177eafe523c width=30% height=20%>
+<img src=https://github.com/fabiojr933/Lista-de-tarefas-APP/assets/41793614/f6b74d30-ba41-42b2-b1bd-8177eafe523c width=70% height=70%>
  <p  
  </p>
 <img src="https://github.com/fabiojr933/Lista-de-tarefas-APP/assets/41793614/9c5e6409-7580-420d-abce-4364f7de2b3c" width=30% height=20%>
