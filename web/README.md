@@ -3,7 +3,7 @@
 
 
  <p align="center">
-    Aplicativo Gratuito desenvolvido para ter um paramentro qual tarefa que esta em desenvolvimento, em revisão e concluido >Lista de Tarefa app</a>.<br>
+    Aplicativo Gratuito desenvolvido para ter um parametro qual tarefa que esta em desenvolvimento, em revisão e concluido >Lista de Tarefa app</a>.<br>
     Espero melhorar o APLICATIVO web com o tempo.  
   </p>
    
